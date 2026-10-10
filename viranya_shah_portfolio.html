@@ -3,220 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viranya Shah - Resume</title>
+    <title>Viranya Shah - Interactive Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --dominos-blue: #0055a5;
-            --dominos-red: #e31837;
-            --dominos-white: #ffffff;
-            --text-dark: #333333;
-            --bg-light: #f5f5f5;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1a2e;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
         }
-
-        header {
-            background-color: var(--dominos-blue);
-            color: var(--dominos-white);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--dominos-red);
+        #game-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        header p {
-            font-size: 1.2em;
-            margin: 10px 0 0 0;
-        }
-
-        .contact-info {
-            background-color: var(--dominos-red);
-            color: var(--dominos-white);
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .contact-info a {
-            color: var(--dominos-white);
-            text-decoration: none;
-            margin: 0 15px;
-        }
-
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        h2 {
-            color: var(--dominos-blue);
-            border-bottom: 3px solid var(--dominos-red);
-            padding-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .card {
-            background: var(--dominos-white);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--dominos-blue);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            color: var(--dominos-red);
-        }
-
-        .card h4 {
-            margin: 5px 0;
-            color: var(--text-dark);
-            font-style: italic;
-        }
-
-        .date-location {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .skills-list {
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass through to canvas if needed */
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            box-sizing: border-box;
         }
-
-        .skill-badge {
-            background-color: var(--dominos-blue);
-            color: var(--dominos-white);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: bold;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            pointer-events: auto;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: var(--dominos-blue);
-            color: var(--dominos-white);
-            margin-top: 40px;
+        #info-card {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            width: 90%;
+            max-width: 600px;
+            opacity: 0;
+        }
+        #info-card.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        #controls-help {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            text-align: right;
+        }
+        .key {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin: 2px;
+            font-weight: 600;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Viranya Shah</h1>
-        <p>Product Analyst | Product Manager | SQL, Excel, Python | M.Sc. Data Science</p>
-    </header>
+    <canvas id="game-canvas"></canvas>
 
-    <div class="contact-info">
-        <a href="mailto:viranya911@gmail.com">viranya911@gmail.com</a> | 
-        <a href="https://www.linkedin.com/in/viranyashah" target="_blank">LinkedIn</a> | 
-        Ahmedabad, Gujarat, India
-    </div>
+    <div id="ui-layer">
+        <div class="glass-panel w-fit">
+            <h1 class="text-3xl font-bold tracking-tight text-white">Viranya Shah</h1>
+            <p class="text-sm text-blue-300 mt-1 font-medium">Product Analyst | Product Manager | Data Scientist</p>
+        </div>
 
-    <div class="container">
-        
-        <!-- Skills Section -->
-        <h2>Top Skills (The Ingredients)</h2>
-        <div class="card">
-            <div class="skills-list">
-                <span class="skill-badge">SQL</span>
-                <span class="skill-badge">Python</span>
-                <span class="skill-badge">Excel</span>
-                <span class="skill-badge">PowerPivot</span>
-                <span class="skill-badge">Product Management</span>
-                <span class="skill-badge">Data Analysis</span>
-                <span class="skill-badge">Academic Advising</span>
-                <span class="skill-badge">Online Tutoring</span>
+        <div id="controls-help" class="glass-panel w-fit hidden md:block">
+            <p class="text-sm font-semibold mb-2">Explore the Map</p>
+            <div><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> or Arrows to Drive</div>
+        </div>
+
+        <div id="info-card" class="glass-panel shadow-2xl shadow-blue-500/20">
+            <h2 id="card-title" class="text-2xl font-bold text-blue-400 mb-2">Title</h2>
+            <div id="card-content" class="text-gray-200 text-sm leading-relaxed max-h-48 overflow-y-auto pr-2">
+                Content goes here...
             </div>
         </div>
-
-        <!-- Experience Section -->
-        <h2>Experience (Our Orders)</h2>
-        
-        <div class="card">
-            <h3>Amazon Fulfillment Centre and Service Provider</h3>
-            <h4>Delivery Manager</h4>
-            <div class="date-location">November 2024 - May 2025 | Nuremberg, Bavaria, Germany</div>
-            <p>Executed high-volume outbound logistics under strict 8-hour SLAs, maintaining a 99% accuracy rate across 3000 daily average packages and prioritizing up to 3,000 rapid same-day fulfillments to prevent downstream delays.</p>
-        </div>
-
-        <div class="card">
-            <h3>Lieferando Österreich</h3>
-            <h4>Customer Service Executive</h4>
-            <div class="date-location">April 2023 - November 2024 | Berlin, Germany</div>
-            <p>Managed complex operational edge cases processing up to 100 live customer and rider queries per shift acting as the central point of contact to maintain a 90%+ on-time fulfillment rate despite active route disruptions.</p>
-        </div>
-
-        <div class="card">
-            <h3>McDonald's</h3>
-            <h4>Inventory Manager</h4>
-            <div class="date-location">May 2022 - April 2023 | Erlangen, Bavaria, Germany</div>
-            <p>Managed weekly inventory cycles across multiple supply categories, aligning procurement with daily demand to maintain continuous operational readiness.</p>
-        </div>
-
-        <div class="card">
-            <h3>Flink</h3>
-            <h4>Delivery Rider</h4>
-            <div class="date-location">December 2021 - March 2022 | Erlangen, Bavaria, Germany</div>
-            <p>Executed last-mile deliveries while observing customer behavior and service friction points, developing firsthand insight into service quality and platform retention.</p>
-        </div>
-
-        <div class="card">
-            <h3>H & B COMPUTER EDUCATION</h3>
-            <h4>Academic Tutor</h4>
-            <div class="date-location">April 2020 - September 2021 | Ahmedabad, Gujarat, India</div>
-            <p>Designed and delivered beginner-friendly SQL and Python curricula, using data-driven assessments to iteratively improve instruction and manage stakeholder expectations.</p>
-        </div>
-
-        <div class="card">
-            <h3>RSWM Limited</h3>
-            <h4>Network Intern</h4>
-            <div class="date-location">November 2019 - March 2020 | Rajasthan, India</div>
-            <p>Managed enterprise network infrastructure and analyzed system logs to identify operational bottlenecks, supporting high availability and reliable data flow with a focus on leveraging MySQL databases. Tasks included development and maintainence of ETL pipelines, supporting data analytics initiatives and reporting efforts. Participated in cross-team effort regarding setting up enterprise architecture for the firm, and gained insights on BPM and TOGAF methods.</p>
-        </div>
-
-        <!-- Education Section -->
-        <h2>Education (The Foundation)</h2>
-        
-        <div class="card">
-            <h3>FAU Erlangen-Nürnberg</h3>
-            <h4>Master of Science - MS, Data Science</h4>
-            <div class="date-location">October 2021 - December 2023</div>
-        </div>
-
-        <div class="card">
-            <h3>Gujarat Technological University, Ahmedabad</h3>
-            <h4>Bachelor of Engineering - BE, Computer Science</h4>
-            <div class="date-location">August 2016 - September 2020</div>
-        </div>
-
     </div>
 
-    <footer>
-        <p>&copy; 2026 Viranya Shah. Ready to Deliver Results.</p>
-    </footer>
+    <script>
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const infoCard = document.getElementById('info-card');
+        const cardTitle = document.getElementById('card-title');
+        const cardContent = document.getElementById('card-content');
 
+        let width, height;
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Input state
+        const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+        
+        window.addEventListener('keydown', (e) => { if(keys.hasOwnProperty(e.key)) keys[e.key] = true; });
+        window.addEventListener('keyup', (e) => { if(keys.hasOwnProperty(e.key)) keys[e.key] = false; });
+
+        // Player (Vehicle) properties
+        const player = {
+            x: 0,
+            y: 0,
+            vx: 0,
+            vy: 0,
+            speed: 0,
+            maxSpeed: 8,
+            friction: 0.92,
+            acceleration: 0.6,
+            angle: 0,
+            width: 30,
+            height: 50,
+            color: '#3b82f6'
+        };
+
+        // Camera
+        const camera = { x: 0, y: 0 };
+
+        const zones = [
+            {
+                x: 0, y: -200, width: 120, height: 120, color: '#ec4899', icon: '🎓',
+                title: 'Education',
+                content: `
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>FAU Erlangen-Nürnberg:</strong> MS, Data Science (Oct 2021 - Dec 2023)</li>
+                        <li><strong>Gujarat Technological University:</strong> BE, Computer Science (Aug 2016 - Sep 2020)</li>
+                    </ul>`
+            },
+            {
+                x: -300, y: 150, width: 140, height: 140, color: '#f59e0b', icon: '💼',
+                title: 'Recent Experience',
+                content: `
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Amazon (Nuremberg):</strong> Delivery Manager (Nov 2024 - May 2025). Managed 3000 daily packages, 99% accuracy.</li>
+                        <li><strong>Lieferando (Berlin):</strong> Customer Service Exec (Apr 2023 - Nov 2024). Handled 100+ live queries/shift.</li>
+                    </ul>`
+            },
+            {
+                x: 300, y: 150, width: 120, height: 120, color: '#10b981', icon: '📈',
+                title: 'Previous Experience',
+                content: `
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>McDonald's (Erlangen):</strong> Inventory Manager (May 2022 - Apr 2023)</li>
+                        <li><strong>Flink (Erlangen):</strong> Delivery Rider (Dec 2021 - Mar 2022)</li>
+                        <li><strong>H & B Computer Education:</strong> Academic Tutor (SQL & Python)</li>
+                        <li><strong>RSWM Limited:</strong> Network Intern</li>
+                    </ul>`
+            },
+            {
+                x: -200, y: -400, width: 100, height: 100, color: '#8b5cf6', icon: '⚡',
+                title: 'Top Skills',
+                content: `
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">SQL</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">Python</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">Excel</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">PowerPivot</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">Product Management</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs">Data Science</span>
+                    </div>`
+            },
+            {
+                x: 200, y: -400, width: 100, height: 100, color: '#06b6d4', icon: '📬',
+                title: 'Contact',
+                content: `
+                    <p class="mb-2">Let's connect!</p>
+                    <p>📧 <a href="mailto:viranya911@gmail.com" class="text-blue-300 hover:underline">viranya911@gmail.com</a></p>
+                    <p>🔗 <a href="https://www.linkedin.com/in/viranyashah" target="_blank" class="text-blue-300 hover:underline">linkedin.com/in/viranyashah</a></p>
+                `
+            }
+        ];
+
+        let activeZone = null;
+
+        function update() {
+            // Movement logic
+            let moving = false;
+            let targetAngle = player.angle;
+
+            if (keys.w || keys.ArrowUp) { player.vy -= player.acceleration; moving = true; }
+            if (keys.s || keys.ArrowDown) { player.vy += player.acceleration; moving = true; }
+            if (keys.a || keys.ArrowLeft) { player.vx -= player.acceleration; moving = true; }
+            if (keys.d || keys.ArrowRight) { player.vx += player.acceleration; moving = true; }
+
+            // Apply friction
+            player.vx *= player.friction;
+            player.vy *= player.friction;
+
+            // Cap speed
+            const currentSpeed = Math.sqrt(player.vx * player.vx + player.vy * player.vy);
+            if (currentSpeed > player.maxSpeed) {
+                player.vx = (player.vx / currentSpeed) * player.maxSpeed;
+                player.vy = (player.vy / currentSpeed) * player.maxSpeed;
+            }
+
+            // Update angle based on velocity if moving
+            if (currentSpeed > 0.5) {
+                player.angle = Math.atan2(player.vy, player.vx) + Math.PI / 2; // +90deg because car points up initially
+            }
+
+            player.x += player.vx;
+            player.y += player.vy;
+
+            // Camera smoothly follows player
+            camera.x += (player.x - camera.x) * 0.1;
+            camera.y += (player.y - camera.y) * 0.1;
+
+            checkCollisions();
+        }
+
+        function checkCollisions() {
+            let foundZone = null;
+            const interactionRadius = 150;
+
+            for (let zone of zones) {
+                // Simple distance check from center of zone
+                const dx = player.x - zone.x;
+                const dy = player.y - zone.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < interactionRadius) {
+                    foundZone = zone;
+                    break;
+                }
+            }
+
+            if (foundZone !== activeZone) {
+                activeZone = foundZone;
+                if (activeZone) {
+                    cardTitle.innerText = activeZone.title;
+                    cardTitle.style.color = activeZone.color;
+                    cardContent.innerHTML = activeZone.content;
+                    infoCard.classList.add('active');
+                } else {
+                    infoCard.classList.remove('active');
+                }
+            }
+        }
+
+        function drawGrid() {
+            const gridSize = 100;
+            const offsetX = -camera.x % gridSize;
+            const offsetY = -camera.y % gridSize;
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 2;
+            
+            ctx.beginPath();
+            for (let x = offsetX - width/2; x < width/2 + gridSize; x += gridSize) {
+                ctx.moveTo(x + width/2, 0);
+                ctx.lineTo(x + width/2, height);
+            }
+            for (let y = offsetY - height/2; y < height/2 + gridSize; y += gridSize) {
+                ctx.moveTo(0, y + height/2);
+                ctx.lineTo(width, y + height/2);
+            }
+            ctx.stroke();
+        }
+
+        function drawZones() {
+            zones.forEach(zone => {
+                const screenX = zone.x - camera.x + width / 2;
+                const screenY = zone.y - camera.y + height / 2;
+
+                // Draw glowing base
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = zone.color;
+                ctx.fillStyle = zone.color;
+                ctx.globalAlpha = 0.2;
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, zone.width/2 + 20, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw platform
+                ctx.globalAlpha = 1.0;
+                ctx.shadowBlur = 10;
+                ctx.fillStyle = '#2a2a4a';
+                ctx.strokeStyle = zone.color;
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.roundRect(screenX - zone.width/2, screenY - zone.height/2, zone.width, zone.height, 16);
+                ctx.fill();
+                ctx.stroke();
+                ctx.shadowBlur = 0; // reset
+
+                // Draw Icon
+                ctx.font = '40px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(zone.icon, screenX, screenY - 15);
+
+                // Draw Title
+                ctx.font = 'bold 16px Inter';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(zone.title, screenX, screenY + 25);
+                
+                // Draw interaction ring if active
+                if(activeZone === zone) {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.arc(screenX, screenY, zone.width/2 + 40, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+            });
+        }
+
+        function drawPlayer() {
+            const screenX = width / 2 + (player.x - camera.x);
+            const screenY = height / 2 + (player.y - camera.y);
+
+            ctx.save();
+            ctx.translate(screenX, screenY);
+            ctx.rotate(player.angle);
+
+            // Shadow
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetY = 10;
+
+            // Car body
+            ctx.fillStyle = player.color;
+            ctx.beginPath();
+            ctx.roundRect(-player.width/2, -player.height/2, player.width, player.height, 8);
+            ctx.fill();
+
+            // Cockpit
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.roundRect(-player.width/2 + 4, -player.height/4, player.width - 8, player.height/2, 4);
+            ctx.fill();
+            
+            // Headlights
+            ctx.fillStyle = '#fef08a';
+            ctx.beginPath();
+            ctx.arc(-player.width/2 + 6, -player.height/2 + 4, 3, 0, Math.PI*2);
+            ctx.arc(player.width/2 - 6, -player.height/2 + 4, 3, 0, Math.PI*2);
+            ctx.fill();
+
+            // Headlight Beams (if moving or just for style)
+            ctx.globalAlpha = 0.15;
+            ctx.beginPath();
+            ctx.moveTo(-player.width/2 + 6, -player.height/2);
+            ctx.lineTo(-player.width/2 - 20, -player.height/2 - 60);
+            ctx.lineTo(-player.width/2 + 30, -player.height/2 - 60);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(player.width/2 - 6, -player.height/2);
+            ctx.lineTo(player.width/2 - 30, -player.height/2 - 60);
+            ctx.lineTo(player.width/2 + 20, -player.height/2 - 60);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function loop() {
+            ctx.clearRect(0, 0, width, height);
+            
+            update();
+            
+            drawGrid();
+            drawZones();
+            drawPlayer();
+            
+            // Draw starting text prompt on floor if near origin
+            if(Math.abs(player.x) < 200 && Math.abs(player.y) < 200) {
+                 const screenX = -camera.x + width / 2;
+                 const screenY = -camera.y + height / 2 + 100;
+                 ctx.font = '20px Inter';
+                 ctx.textAlign = 'center';
+                 ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                 ctx.fillText('Drive around to explore my portfolio', screenX, screenY);
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        // Start game
+        loop();
+    </script>
 </body>
 </html>
