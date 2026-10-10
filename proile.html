@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viranya Shah - Resume</title>
+    <style>
+        :root {
+            --dominos-blue: #0055a5;
+            --dominos-red: #e31837;
+            --dominos-white: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        header {
+            background-color: var(--dominos-blue);
+            color: var(--dominos-white);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--dominos-red);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0 0 0;
+        }
+
+        .contact-info {
+            background-color: var(--dominos-red);
+            color: var(--dominos-white);
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .contact-info a {
+            color: var(--dominos-white);
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: var(--dominos-blue);
+            border-bottom: 3px solid var(--dominos-red);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--dominos-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--dominos-blue);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--dominos-red);
+        }
+
+        .card h4 {
+            margin: 5px 0;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .date-location {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-badge {
+            background-color: var(--dominos-blue);
+            color: var(--dominos-white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--dominos-blue);
+            color: var(--dominos-white);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Viranya Shah</h1>
+        <p>Product Analyst | Product Manager | SQL, Excel, Python | M.Sc. Data Science</p>
+    </header>
+
+    <div class="contact-info">
+        <a href="mailto:viranya911@gmail.com">viranya911@gmail.com</a> | 
+        <a href="https://www.linkedin.com/in/viranyashah" target="_blank">LinkedIn</a> | 
+        Ahmedabad, Gujarat, India
+    </div>
+
+    <div class="container">
+        
+        <!-- Skills Section -->
+        <h2>Top Skills (The Ingredients)</h2>
+        <div class="card">
+            <div class="skills-list">
+                <span class="skill-badge">SQL</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">Excel</span>
+                <span class="skill-badge">PowerPivot</span>
+                <span class="skill-badge">Product Management</span>
+                <span class="skill-badge">Data Analysis</span>
+                <span class="skill-badge">Academic Advising</span>
+                <span class="skill-badge">Online Tutoring</span>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <h2>Experience (Our Orders)</h2>
+        
+        <div class="card">
+            <h3>Amazon Fulfillment Centre and Service Provider</h3>
+            <h4>Delivery Manager</h4>
+            <div class="date-location">November 2024 - May 2025 | Nuremberg, Bavaria, Germany</div>
+            <p>Executed high-volume outbound logistics under strict 8-hour SLAs, maintaining a 99% accuracy rate across 3000 daily average packages and prioritizing up to 3,000 rapid same-day fulfillments to prevent downstream delays.</p>
+        </div>
+
+        <div class="card">
+            <h3>Lieferando Österreich</h3>
+            <h4>Customer Service Executive</h4>
+            <div class="date-location">April 2023 - November 2024 | Berlin, Germany</div>
+            <p>Managed complex operational edge cases processing up to 100 live customer and rider queries per shift acting as the central point of contact to maintain a 90%+ on-time fulfillment rate despite active route disruptions.</p>
+        </div>
+
+        <div class="card">
+            <h3>McDonald's</h3>
+            <h4>Inventory Manager</h4>
+            <div class="date-location">May 2022 - April 2023 | Erlangen, Bavaria, Germany</div>
+            <p>Managed weekly inventory cycles across multiple supply categories, aligning procurement with daily demand to maintain continuous operational readiness.</p>
+        </div>
+
+        <div class="card">
+            <h3>Flink</h3>
+            <h4>Delivery Rider</h4>
+            <div class="date-location">December 2021 - March 2022 | Erlangen, Bavaria, Germany</div>
+            <p>Executed last-mile deliveries while observing customer behavior and service friction points, developing firsthand insight into service quality and platform retention.</p>
+        </div>
+
+        <div class="card">
+            <h3>H & B COMPUTER EDUCATION</h3>
+            <h4>Academic Tutor</h4>
+            <div class="date-location">April 2020 - September 2021 | Ahmedabad, Gujarat, India</div>
+            <p>Designed and delivered beginner-friendly SQL and Python curricula, using data-driven assessments to iteratively improve instruction and manage stakeholder expectations.</p>
+        </div>
+
+        <div class="card">
+            <h3>RSWM Limited</h3>
+            <h4>Network Intern</h4>
+            <div class="date-location">November 2019 - March 2020 | Rajasthan, India</div>
+            <p>Managed enterprise network infrastructure and analyzed system logs to identify operational bottlenecks, supporting high availability and reliable data flow with a focus on leveraging MySQL databases. Tasks included development and maintainence of ETL pipelines, supporting data analytics initiatives and reporting efforts. Participated in cross-team effort regarding setting up enterprise architecture for the firm, and gained insights on BPM and TOGAF methods.</p>
+        </div>
+
+        <!-- Education Section -->
+        <h2>Education (The Foundation)</h2>
+        
+        <div class="card">
+            <h3>FAU Erlangen-Nürnberg</h3>
+            <h4>Master of Science - MS, Data Science</h4>
+            <div class="date-location">October 2021 - December 2023</div>
+        </div>
+
+        <div class="card">
+            <h3>Gujarat Technological University, Ahmedabad</h3>
+            <h4>Bachelor of Engineering - BE, Computer Science</h4>
+            <div class="date-location">August 2016 - September 2020</div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Viranya Shah. Ready to Deliver Results.</p>
+    </footer>
+
+</body>
+</html>
